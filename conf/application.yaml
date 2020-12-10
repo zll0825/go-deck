@@ -1,0 +1,38 @@
+# system configuration
+system:
+  env: 'public'  # Change to "develop" to skip authentication for development mode
+  host: '0.0.0.0'
+  port: 9797
+
+# jwt configuration
+jwt:
+  key: 'deck'
+
+# casbin configuration
+casbin:
+  path: ''
+
+# zap logger configuration
+logger:
+  level: 'info'
+  format: 'console'
+  prefix: '[DECK]'
+  directory: 'log'
+  linkName: 'latest_log'
+  showLine: true
+  encodeLevel: 'LowercaseColorLevelEncoder'
+  stacktraceKey: 'stacktrace'
+  logInConsole: true
+
+# gorm
+db:
+  system:
+    driver: "mysql"
+    dsn: root:root@tcp(127.0.0.1:3306)/deck?charset=utf8mb4&parseTime=True&loc=Local
+    dial_timeout: 5000    #连接超时时间, 单位: millisecond, {default: 5000}
+    read_timeout: 5000    #读超时时间, 单位：millisecond, {default: 5000}
+    write_timeout: 3000   #写超时时间, 单位：millisecond, {default: 3000}
+    max_open_conns: 256   #最大连接数大小, {default: 256}
+    max_idle_conns: 10    #最大空闲的连接的个数, {default: 10}
+    max_life_conns: 0     #连接的生命时间,超过此时间，连接将关闭后重新建立新的，0代表忽略相关判断,单位:second, {default: 0}
+    log_level: "Info"     #日志级别, Silent、Error、Warn、Info {default: Silent}
