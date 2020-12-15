@@ -9,14 +9,14 @@ import (
 	"go-deck/app/service"
 )
 
-// @Tags Authority
+// @Tags Role
 // @Summary 创建角色
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysAuthority true "权限id, 权限名, 父角色id"
+// @Param data body dto.CreateRole true "权限id, 权限名, 父角色id"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
-// @Router /authority/createAuthority [post]
+// @Router /role/create [post]
 func CreateRole(c *gin.Context) {
 	var req dto.CreateRole
 
@@ -61,8 +61,30 @@ func BindMenu(c *gin.Context)  {
 		return
 	}
 
-	// 查出现有角色下的菜单
+	// 绑定角色菜单
 	if err := service.BindRoleMenu(req.RoleId, req.MenuIds); err != nil {
+		response.FailWithMessage("绑定权限失败", c)
+		c.Abort()
+		return
+	}
+
+	response.OkWithMessage("绑定权限成功", c)
+	return
+}
+
+// 给角色绑定接口权限
+func BindApi(c *gin.Context)  {
+	var req dto.AddRoleApi
+
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage("参数验证失败", c)
+		c.Abort()
+		return
+	}
+
+	// 绑定角色api
+	if err := service.BindRoleApi(req.RoleId, req.ApiIds); err != nil {
 		response.FailWithMessage("绑定权限失败", c)
 		c.Abort()
 		return

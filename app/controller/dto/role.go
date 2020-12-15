@@ -13,3 +13,8 @@ type AddRoleMenu struct {
 	RoleId  int   `json:"roleId" binding:"required"`
 	MenuIds []int `json:"menuIds" binding:"required"`
 }
+
+type AddRoleApi struct {
+	RoleId  int   `json:"roleId" binding:"required"`
+	ApiIds []int `json:"apiIds" binding:"required"`
+}

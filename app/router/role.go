@@ -13,5 +13,6 @@ func InitRoleRouter(Router *gin.RouterGroup) {
 		router.POST("update", controller.UpdateRole) // 修改角色
 
 		router.POST("bindMenu", controller.BindMenu) // 绑定菜单
+		router.POST("bindApi", controller.BindApi) // 绑定api
 	}
 }

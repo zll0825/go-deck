@@ -6,6 +6,8 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"go-deck/app/global"
 	"go-deck/app/middleware"
+
+	_ "go-deck/docs"
 )
 
 func Routers() *gin.Engine {

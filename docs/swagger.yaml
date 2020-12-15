@@ -1,0 +1,297 @@
+definitions:
+  dto.CreateApi:
+    properties:
+      apiGroup:
+        type: string
+      description:
+        type: string
+      method:
+        type: string
+      path:
+        type: string
+    type: object
+  dto.CreateRole:
+    properties:
+      roleName:
+        type: string
+    required:
+    - roleName
+    type: object
+  dto.CreateUser:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.DeleteApi:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  dto.DetailApi:
+    properties:
+      id:
+        type: integer
+    type: object
+  dto.Login:
+    properties:
+      captcha:
+        type: string
+      captchaId:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - captcha
+    - captchaId
+    - password
+    - username
+    type: object
+  dto.SearchApi:
+    properties:
+      apiGroup:
+        type: string
+      description:
+        type: string
+      method:
+        type: string
+      page:
+        type: integer
+      path:
+        type: string
+      size:
+        type: integer
+    type: object
+  dto.UpdateApi:
+    properties:
+      apiGroup:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      method:
+        type: string
+      path:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/all:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 获取所有的Api 不分页
+      tags:
+      - Api
+  /api/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: api路径, api中文描述, api组, 方法
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建api
+      tags:
+      - Api
+  /api/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DeleteApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除api
+      tags:
+      - Api
+  /api/detail:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 根据id获取api
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DetailApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 根据id获取api
+      tags:
+      - Api
+  /api/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 分页获取API列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SearchApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取API列表
+      tags:
+      - Api
+  /api/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: api路径, api中文描述, api组, 方法
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"修改成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建基础api
+      tags:
+      - Api
+  /base/captcha:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"验证码获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 生成验证码
+      tags:
+      - Base
+  /base/login:
+    post:
+      parameters:
+      - description: 用户名, 密码, 验证码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"登陆成功"}'
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - Base
+  /role/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 权限id, 权限名, 父角色id
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建角色
+      tags:
+      - Role
+  /user/create:
+    post:
+      parameters:
+      - description: 用户名, 昵称, 密码, 角色ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"注册成功"}'
+          schema:
+            type: string
+      summary: 创建用户
+      tags:
+      - User
+swagger: "2.0"

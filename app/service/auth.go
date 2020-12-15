@@ -4,7 +4,9 @@ import (
 	"go-deck/app/global"
 	"go-deck/app/model/entity"
 	"go-deck/app/util"
+	"go-deck/pkg/casbin"
 	"gorm.io/gorm"
+	"strconv"
 )
 
 func BindRoleMenu(roleId int, menuIds []int) error {
@@ -39,6 +41,44 @@ func BindRoleMenu(roleId int, menuIds []int) error {
 		}
 
 		// 返回 nil 提交事务
+		return nil
+	})
+
+	return err
+}
+
+func BindRoleApi(roleId int, apiIds []int) error {
+	// 查出apiInfo
+	apiInfos, err := global.DB.FindApisByIds(apiIds)
+	if err != nil {
+		return err
+	}
+
+	roleIdString := strconv.Itoa(roleId)
+	// 开启事务
+	err = global.DB.System.Transaction(func(tx *gorm.DB) error {
+		// 写入casbin
+		cas, err := casbin.NewCasbin(global.Config.CasbinConfig, tx)
+		if err != nil {
+			return err
+		}
+
+		// 移除所有权限
+		res, err := cas.RemoveFilteredPolicy(0, roleIdString)
+		if err != nil {
+			return err
+		}
+
+		var rules [][]string
+		for _, info := range apiInfos {
+			rules = append(rules, []string{roleIdString, info.Path, info.Method})
+		}
+
+		res, err = cas.AddPolicies(rules)
+		if err != nil || res != true {
+			return err
+		}
+
 		return nil
 	})
 

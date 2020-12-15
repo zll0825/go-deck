@@ -16,7 +16,7 @@ import (
 // @Tags Base
 // @Summary 用户登录
 // @Produce  application/json
-// @Param data body request.Login true "用户名, 密码, 验证码"
+// @Param data body dto.Login true "用户名, 密码, 验证码"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"登陆成功"}"
 // @Router /base/login [post]
 func Login(c *gin.Context) {
@@ -84,12 +84,12 @@ func tokenNext(c *gin.Context, user entity.User) {
 	}, "登录成功", c)
 }
 
-// @Tags SysUser
+// @Tags User
 // @Summary 创建用户
 // @Produce  application/json
-// @Param data body model.SysUser true "用户名, 昵称, 密码, 角色ID"
+// @Param data body dto.CreateUser true "用户名, 昵称, 密码, 角色ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
-// @Router /user/register [post]
+// @Router /user/create [post]
 func CreateUser(c *gin.Context) {
 	var req dto.CreateUser
 

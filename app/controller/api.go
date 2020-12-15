@@ -10,14 +10,14 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Tags SysApi
-// @Summary 创建基础api
+// @Tags Api
+// @Summary 创建api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysApi true "api路径, api中文描述, api组, 方法"
+// @Param data body dto.CreateApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
-// @Router /api/createApi [post]
+// @Router /api/create [post]
 func CreateApi(c *gin.Context) {
 	var req dto.CreateApi
 	// 校验参数
@@ -42,14 +42,14 @@ func CreateApi(c *gin.Context) {
 	}
 }
 
-// @Tags SysApi
+// @Tags Api
 // @Summary 删除api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysApi true "ID"
+// @Param data body dto.DeleteApi true "ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /api/deleteApi [post]
+// @Router /api/delete [post]
 func DeleteApi(c *gin.Context) {
 	var req dto.DeleteApi
 	// 校验参数
@@ -67,14 +67,14 @@ func DeleteApi(c *gin.Context) {
 	}
 }
 
-// @Tags SysApi
+// @Tags Api
 // @Summary 分页获取API列表
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.SearchApiParams true "分页获取API列表"
+// @Param data body dto.SearchApi true "分页获取API列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getApiList [post]
+// @Router /api/list [post]
 func GetApiList(c *gin.Context) {
 	var req dto.SearchApi
 	// 校验参数
@@ -97,14 +97,14 @@ func GetApiList(c *gin.Context) {
 	}
 }
 
-// @Tags SysApi
+// @Tags Api
 // @Summary 根据id获取api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "根据id获取api"
+// @Param data body dto.DetailApi true "根据id获取api"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getApiById [post]
+// @Router /api/detail [post]
 func GetApiById(c *gin.Context) {
 	var req dto.DetailApi
 	// 校验参数
@@ -124,14 +124,14 @@ func GetApiById(c *gin.Context) {
 	}
 }
 
-// @Tags SysApi
+// @Tags Api
 // @Summary 创建基础api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysApi true "api路径, api中文描述, api组, 方法"
+// @Param data body dto.UpdateApi true "api路径, api中文描述, api组, 方法"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /api/updateApi [post]
+// @Router /api/update [post]
 func UpdateApi(c *gin.Context) {
 	var req dto.UpdateApi
 	// 校验参数
@@ -157,13 +157,13 @@ func UpdateApi(c *gin.Context) {
 	}
 }
 
-// @Tags SysApi
+// @Tags Api
 // @Summary 获取所有的Api 不分页
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getAllApis [post]
+// @Router /api/all [post]
 func GetAllApis(c *gin.Context) {
 	if apis, err := global.DB.AllApis(); err != nil {
 		global.Logger.Error("获取失败!", zap.Any("err", err))

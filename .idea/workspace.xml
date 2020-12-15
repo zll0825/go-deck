@@ -3,6 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="f050e3d6-2eba-46e6-a169-07184bd8defa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/dto/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/dto/menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/dto/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/dto/role.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/role.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/entity/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/entity/menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/router/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/router/menu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/router/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/router/role.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/router/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/service/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/service/search_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/list.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +46,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="DefaultYamlCloudFormationTemplate" value="AWS CloudFormation Template (YAML)" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -40,7 +57,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="go.vgo" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -56,7 +73,7 @@
       <recent name="$PROJECT_DIR$/app/model/entity" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build go-deck">
     <configuration name="go build go-deck" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go-deck" />
       <working_directory value="$PROJECT_DIR$" />
@@ -64,6 +81,47 @@
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="go-deck" />
       <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build go-deck" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-deck" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="go-deck" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SwaggerCodegen: swagger.yaml" type="SwaggerCodegen">
+      <option name="activeConfigurationType" value="FILE" />
+      <option name="configurationPath" value="" />
+      <option name="customJreEnabled" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="enableDebugLogging" value="false" />
+      <option name="generateToPath" value="" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorPath" value="" />
+      <option name="jdkPath" value="Default" />
+      <option name="language" value="" />
+      <option name="specificationPath" value="$PROJECT_DIR$/docs/swagger.yaml" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="SwaggerCodegen">
+      <option name="activeConfigurationType" value="FILE" />
+      <option name="configurationPath" value="" />
+      <option name="customJreEnabled" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="enableDebugLogging" value="false" />
+      <option name="generateToPath" value="" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorPath" value="" />
+      <option name="jdkPath" value="Default" />
+      <option name="language" value="" />
+      <option name="specificationPath" value="$PROJECT_DIR$/docs/swagger.yaml" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -80,62 +138,70 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
+    <state x="304" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607658603305">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="304" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1607658603305" />
     <state x="616" y="238" key="#com.intellij.ide.util.MemberChooser" timestamp="1607499548790">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="616" y="238" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1607499548790" />
-    <state width="690" height="466" key="DebuggerActiveHint" timestamp="1607597610579">
+    <state width="782" height="466" key="DebuggerActiveHint" timestamp="1607933740904">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="690" height="466" key="DebuggerActiveHint/0.0.1680.1050@0.0.1680.1050" timestamp="1607597610579" />
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1607598332622">
+    <state width="782" height="466" key="DebuggerActiveHint/0.0.1680.1050@0.0.1680.1050" timestamp="1607933740904" />
+    <state width="1638" height="364" key="GridCell.Tab.0.bottom" timestamp="1607939928481">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1607598332622" />
-    <state width="1638" height="364" key="GridCell.Tab.0.bottom/0.23.1680.959@0.23.1680.959" timestamp="1607597399884" />
-    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1607598332620">
+    <state width="1638" height="364" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928481" />
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.23.1680.959@0.23.1680.959" timestamp="1607678775496" />
+    <state width="1638" height="364" key="GridCell.Tab.0.center" timestamp="1607939928479">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1607598332620" />
-    <state width="1638" height="364" key="GridCell.Tab.0.center/0.23.1680.959@0.23.1680.959" timestamp="1607597399882" />
-    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1607598332619">
+    <state width="1638" height="364" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928479" />
+    <state width="1638" height="295" key="GridCell.Tab.0.center/0.23.1680.959@0.23.1680.959" timestamp="1607678775495" />
+    <state width="1638" height="364" key="GridCell.Tab.0.left" timestamp="1607939928478">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1607598332619" />
-    <state width="1638" height="364" key="GridCell.Tab.0.left/0.23.1680.959@0.23.1680.959" timestamp="1607597399882" />
-    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1607598332621">
+    <state width="1638" height="364" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928478" />
+    <state width="1638" height="295" key="GridCell.Tab.0.left/0.23.1680.959@0.23.1680.959" timestamp="1607678775494" />
+    <state width="1638" height="364" key="GridCell.Tab.0.right" timestamp="1607939928480">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1607598332621" />
-    <state width="1638" height="364" key="GridCell.Tab.0.right/0.23.1680.959@0.23.1680.959" timestamp="1607597399883" />
-    <state width="1638" height="364" key="GridCell.Tab.1.bottom" timestamp="1607598014916">
+    <state width="1638" height="364" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928480" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right/0.23.1680.959@0.23.1680.959" timestamp="1607678775495" />
+    <state width="1638" height="364" key="GridCell.Tab.1.bottom" timestamp="1607939928485">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="364" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1607598014916" />
-    <state width="1638" height="364" key="GridCell.Tab.1.bottom/0.23.1680.959@0.23.1680.959" timestamp="1607597955483" />
-    <state width="1638" height="364" key="GridCell.Tab.1.center" timestamp="1607598014915">
+    <state width="1638" height="364" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928485" />
+    <state width="1638" height="364" key="GridCell.Tab.1.bottom/0.23.1680.959@0.23.1680.959" timestamp="1607934503355" />
+    <state width="1638" height="364" key="GridCell.Tab.1.center" timestamp="1607939928483">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="364" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1607598014915" />
-    <state width="1638" height="364" key="GridCell.Tab.1.center/0.23.1680.959@0.23.1680.959" timestamp="1607597955481" />
-    <state width="1638" height="364" key="GridCell.Tab.1.left" timestamp="1607598014914">
+    <state width="1638" height="364" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928483" />
+    <state width="1638" height="364" key="GridCell.Tab.1.center/0.23.1680.959@0.23.1680.959" timestamp="1607934503353" />
+    <state width="1638" height="364" key="GridCell.Tab.1.left" timestamp="1607939928482">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="364" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1607598014914" />
-    <state width="1638" height="364" key="GridCell.Tab.1.left/0.23.1680.959@0.23.1680.959" timestamp="1607597955480" />
-    <state width="1638" height="364" key="GridCell.Tab.1.right" timestamp="1607598014915">
+    <state width="1638" height="364" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928482" />
+    <state width="1638" height="364" key="GridCell.Tab.1.left/0.23.1680.959@0.23.1680.959" timestamp="1607934503351" />
+    <state width="1638" height="364" key="GridCell.Tab.1.right" timestamp="1607939928484">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="364" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1607598014915" />
-    <state width="1638" height="364" key="GridCell.Tab.1.right/0.23.1680.959@0.23.1680.959" timestamp="1607597955481" />
-    <state x="341" y="164" key="SettingsEditor" timestamp="1607061940184">
+    <state width="1638" height="364" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1607939928484" />
+    <state width="1638" height="364" key="GridCell.Tab.1.right/0.23.1680.959@0.23.1680.959" timestamp="1607934503354" />
+    <state x="341" y="164" key="SettingsEditor" timestamp="1607658035694">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1607061940184" />
+    <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1607658035694" />
     <state width="840" height="525" key="XDebugger.FullValuePopup" timestamp="1607594438595">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state width="840" height="525" key="XDebugger.FullValuePopup/0.0.1680.1050@0.0.1680.1050" timestamp="1607594438595" />
+    <state x="380" y="261" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1607933909106">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="380" y="261" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1680.1050@0.0.1680.1050" timestamp="1607933909106" />
     <state x="541" y="280" width="598" height="548" key="find.popup" timestamp="1607417848658">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -144,16 +210,5 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1607583804005" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/app/controller/user.go</url>
-          <line>60</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

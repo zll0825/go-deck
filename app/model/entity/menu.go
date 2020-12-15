@@ -7,7 +7,7 @@ import (
 type Menu struct {
 	ID          int    `gorm:"primarykey"`
 	MenuLevel   int    `json:"-"`
-	ParentId    string `json:"parentId" gorm:"comment:父菜单ID"`
+	ParentId    int    `json:"parentId" gorm:"comment:父菜单ID"`
 	Path        string `json:"path" gorm:"comment:路由path"`
 	Name        string `json:"name" gorm:"comment:路由name"`
 	Hidden      bool   `json:"hidden" gorm:"comment:是否在列表隐藏"`
@@ -17,6 +17,8 @@ type Menu struct {
 	DefaultMenu bool   `json:"defaultMenu" gorm:"comment:是否是基础路由（开发中）"`
 	Title       string `json:"title" gorm:"comment:菜单名"`
 	Icon        string `json:"icon" gorm:"comment:菜单图标"`
+
+	Children []Menu `json:"children" gorm:"-"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
