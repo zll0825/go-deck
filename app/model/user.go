@@ -14,7 +14,13 @@ func (d *Dao) Login(user *entity.User) (*entity.User, error) {
 
 func (d *Dao) FindUserByUserName(userName string) (*entity.User, error) {
 	var user entity.User
-	err := SystemDB().Where("username = ?", userName).First(&user).Error
+	err := SystemDB().Where("username = ?", userName).Preload("Roles").Find(&user).Error
+	return &user, err
+}
+
+func (d *Dao) FindUserByUserId(userId int) (*entity.User, error) {
+	var user entity.User
+	err := SystemDB().Where("id = ?", userId).Find(&user).Error
 	return &user, err
 }
 

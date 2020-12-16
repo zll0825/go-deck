@@ -15,7 +15,7 @@ type User struct {
 	UpdatedAt time.Time
 	DeletedAt *time.Time
 
-	Role []*Role
+	Roles []Role `json:"roles" gorm:"many2many:user_role"`
 }
 
 func (User)TableName() string {

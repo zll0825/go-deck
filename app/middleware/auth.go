@@ -19,7 +19,7 @@ func CasbinHandler() gin.HandlerFunc {
 		// 获取请求方法
 		act := c.Request.Method
 		// 获取用户的角色
-		sub := waitUse.RoleIds
+		sub := waitUse.Username
 		e, err := casbin.NewCasbin(global.Config.CasbinConfig, model.SystemDB())
 		if err != nil {
 			panic(err)

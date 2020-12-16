@@ -28,7 +28,8 @@ func CreateRole(c *gin.Context) {
 	}
 
 	role := entity.Role{
-		Name: req.RoleName,
+		Name: req.Name,
+		Key: req.Key,
 	}
 	if err := global.DB.CreateRole(&role); err != nil {
 		response.FailWithMessage("创建角色失败", c)
@@ -52,7 +53,7 @@ func UpdateRole(c *gin.Context) {
 
 // 给角色绑定菜单权限
 func BindMenu(c *gin.Context)  {
-	var req dto.AddRoleMenu
+	var req dto.BindRoleMenu
 
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
@@ -74,7 +75,7 @@ func BindMenu(c *gin.Context)  {
 
 // 给角色绑定接口权限
 func BindApi(c *gin.Context)  {
-	var req dto.AddRoleApi
+	var req dto.BindRoleApi
 
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {

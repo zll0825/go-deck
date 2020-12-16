@@ -7,6 +7,7 @@ import (
 	"go-deck/app/global"
 	"go-deck/app/model/entity"
 	"go-deck/app/response"
+	"go-deck/app/service"
 	myJwt "go-deck/pkg/jwt"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
@@ -120,4 +121,26 @@ func CreateUser(c *gin.Context) {
 	} else {
 		response.OkWithMessage("注册成功", c)
 	}
+}
+
+// 给用户绑定角色权限
+func BindRole(c *gin.Context) {
+	var req dto.BindUserRole
+
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage("参数验证失败", c)
+		c.Abort()
+		return
+	}
+
+	// 绑定角色
+	if err := service.BindUserRole(req.UserId, req.RoleIds); err != nil {
+		response.FailWithMessage("绑定角色失败", c)
+		c.Abort()
+		return
+	}
+
+	response.OkWithMessage("绑定角色成功", c)
+	return
 }

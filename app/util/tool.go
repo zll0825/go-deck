@@ -73,10 +73,10 @@ func Pagination(page int, size int) (offset int, limit int) {
 	return
 }
 
-func GetDifference(slice1, slice2 []int) (in1NotIn2, in2NotIn1 []int) {
-	m := make(map[int]int)
+func GetStringDifference(slice1, slice2 []string) (in1NotIn2, in2NotIn1 []string) {
+	m := make(map[string]int)
 
-	inter := intersect(slice1, slice2)
+	inter := intersectString(slice1, slice2)
 	for _, v := range inter {
 		m[v]++
 	}
@@ -94,9 +94,30 @@ func GetDifference(slice1, slice2 []int) (in1NotIn2, in2NotIn1 []int) {
 	return
 }
 
-func intersect(slice1 []int, slice2 []int) []int {
+func GetIntDifference(slice1, slice2 []int) (in1NotIn2, in2NotIn1 []int) {
+	m := make(map[int]int)
+
+	inter := intersectInt(slice1, slice2)
+	for _, v := range inter {
+		m[v]++
+	}
+	for _, v := range slice1 {
+		if m[v] == 0 {
+			in1NotIn2 = append(in1NotIn2, v)
+		}
+	}
+
+	for _, v := range slice2 {
+		if m[v] == 0 {
+			in2NotIn1 = append(in2NotIn1, v)
+		}
+	}
+	return
+}
+
+func intersectInt(slice1 []int, slice2 []int) []int {
 	if len(slice1) > len(slice2) {
-		return intersect(slice2, slice1)
+		return intersectInt(slice2, slice1)
 	}
 	m := map[int]int{}
 	for _, num := range slice1 {
@@ -104,6 +125,25 @@ func intersect(slice1 []int, slice2 []int) []int {
 	}
 
 	var intersection []int
+	for _, num := range slice2 {
+		if m[num] > 0 {
+			intersection = append(intersection, num)
+			m[num]--
+		}
+	}
+	return intersection
+}
+
+func intersectString(slice1 []string, slice2 []string) []string {
+	if len(slice1) > len(slice2) {
+		return intersectString(slice2, slice1)
+	}
+	m := map[string]int{}
+	for _, num := range slice1 {
+		m[num]++
+	}
+
+	var intersection []string
 	for _, num := range slice2 {
 		if m[num] > 0 {
 			intersection = append(intersection, num)

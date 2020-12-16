@@ -13,3 +13,9 @@ type CreateUser struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
+//
+type BindUserRole struct {
+	UserId  int   `json:"userId" binding:"required"`
+	RoleIds []int `json:"roleIds" binding:"required"`
+}
