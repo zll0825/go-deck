@@ -32,6 +32,8 @@ func Routers() *gin.Engine {
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
 	{
 		InitUserRouter(PrivateGroup) // 用户相关路由
+
+		InitProxyRouter(PrivateGroup) // 自服务代理路由
 	}
 	global.Logger.Info("router register success")
 	return Router

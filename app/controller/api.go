@@ -22,7 +22,7 @@ func CreateApi(c *gin.Context) {
 	var req dto.CreateApi
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
@@ -36,9 +36,9 @@ func CreateApi(c *gin.Context) {
 
 	if err := global.DB.CreateApi(&api); err != nil {
 		global.Logger.Error("创建失败!", zap.Any("err", err))
-		response.FailWithMessage("创建失败", c)
+		response.FailWithMessage(c, "创建失败")
 	} else {
-		response.OkWithMessage("创建成功", c)
+		response.OkWithMessage(c, "创建成功")
 	}
 }
 
@@ -54,16 +54,16 @@ func DeleteApi(c *gin.Context) {
 	var req dto.DeleteApi
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
 
 	if err := service.DeleteByIds(entity.Api{}, req.Ids); err != nil {
 		global.Logger.Error("删除失败!", zap.Any("err", err))
-		response.FailWithMessage("删除失败", c)
+		response.FailWithMessage(c, "删除失败")
 	} else {
-		response.OkWithMessage("删除成功", c)
+		response.OkWithMessage(c, "删除成功")
 	}
 }
 
@@ -79,21 +79,21 @@ func GetApiList(c *gin.Context) {
 	var req dto.SearchApi
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
 
 	if total, list, err := service.GetApiList(req); err != nil {
 		global.Logger.Error("获取失败!", zap.Any("err", err))
-		response.FailWithMessage("获取失败", c)
+		response.FailWithMessage(c, "获取失败")
 	} else {
-		response.OkWithDetailed(response.PageResult{
+		response.OkWithDetailed(c, response.PageResult{
 			List:  list,
 			Total: total,
 			Page:  req.Page,
 			Size:  req.Size,
-		}, "获取成功", c)
+		}, "获取成功")
 	}
 }
 
@@ -109,7 +109,7 @@ func GetApiById(c *gin.Context) {
 	var req dto.DetailApi
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
@@ -118,9 +118,9 @@ func GetApiById(c *gin.Context) {
 	err := service.DetailById(&api, req.Id)
 	if err != nil {
 		global.Logger.Error("获取失败!", zap.Any("err", err))
-		response.FailWithMessage("获取失败", c)
+		response.FailWithMessage(c, "获取失败")
 	} else {
-		response.OkWithData(api, c)
+		response.OkWithData(c, api)
 	}
 }
 
@@ -136,7 +136,7 @@ func UpdateApi(c *gin.Context) {
 	var req dto.UpdateApi
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
@@ -151,9 +151,9 @@ func UpdateApi(c *gin.Context) {
 
 	if err := service.UpdateById(&api, &entity.Api{}, req.Id); err != nil {
 		global.Logger.Error("修改失败!", zap.Any("err", err))
-		response.FailWithMessage("修改失败", c)
+		response.FailWithMessage(c, "修改失败")
 	} else {
-		response.OkWithMessage("修改成功", c)
+		response.OkWithMessage(c, "修改成功")
 	}
 }
 
@@ -167,8 +167,8 @@ func UpdateApi(c *gin.Context) {
 func GetAllApis(c *gin.Context) {
 	if apis, err := global.DB.AllApis(); err != nil {
 		global.Logger.Error("获取失败!", zap.Any("err", err))
-		response.FailWithMessage("获取失败", c)
+		response.FailWithMessage(c, "获取失败")
 	} else {
-		response.OkWithDetailed(apis, "获取成功", c)
+		response.OkWithDetailed(c, apis, "获取成功")
 	}
 }

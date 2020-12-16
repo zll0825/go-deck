@@ -2,10 +2,11 @@ package zap
 
 import (
 	"fmt"
+	rotate "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"io/ioutil"
 	"os"
+	"path"
 	"time"
 )
 
@@ -110,10 +111,28 @@ func (l *Logger) getEncoder() zapcore.Encoder {
 
 // getEncoderCore 获取Encoder的zapcore.Core
 func (l *Logger) getEncoderCore() (core zapcore.Core) {
-	return zapcore.NewCore(l.getEncoder(), zapcore.AddSync(ioutil.Discard), level)
+	writer, err := l.getWriteSyncer() // 使用file-rotatelogs进行日志分割
+	if err != nil {
+		fmt.Printf("Get Write Syncer Failed err:%v", err.Error())
+		return
+	}
+	return zapcore.NewCore(l.getEncoder(), writer, level)
 }
 
 // 自定义日志输出时间格式
 func (l *Logger) CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(l.config.Prefix + "2006/01/02 - 15:04:05.000"))
+	enc.AppendString(t.Format(l.config.Prefix + "2006/01/02 15:04:05.000"))
+}
+
+func (l *Logger) getWriteSyncer() (zapcore.WriteSyncer, error) {
+	fileWriter, err := rotate.New(
+		path.Join(l.config.Directory, "%Y-%m-%d.log"),
+		rotate.WithLinkName(l.config.LinkName),
+		rotate.WithMaxAge(7*24*time.Hour),
+		rotate.WithRotationTime(24*time.Hour),
+	)
+	if l.config.LogInConsole {
+		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(fileWriter)), err
+	}
+	return zapcore.AddSync(fileWriter), err
 }

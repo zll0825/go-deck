@@ -1,4 +1,40 @@
 definitions:
+  dto.BindRoleApi:
+    properties:
+      apiIds:
+        items:
+          type: integer
+        type: array
+      roleId:
+        type: integer
+    required:
+    - apiIds
+    - roleId
+    type: object
+  dto.BindRoleMenu:
+    properties:
+      menuIds:
+        items:
+          type: integer
+        type: array
+      roleId:
+        type: integer
+    required:
+    - menuIds
+    - roleId
+    type: object
+  dto.BindUserRole:
+    properties:
+      roleIds:
+        items:
+          type: integer
+        type: array
+      userId:
+        type: integer
+    required:
+    - roleIds
+    - userId
+    type: object
   dto.CreateApi:
     properties:
       apiGroup:
@@ -10,12 +46,38 @@ definitions:
       path:
         type: string
     type: object
+  dto.CreateMenu:
+    properties:
+      component:
+        type: string
+      defaultMenu:
+        type: boolean
+      hidden:
+        type: boolean
+      icon:
+        type: string
+      keepAlive:
+        type: boolean
+      name:
+        type: string
+      parentId:
+        type: integer
+      path:
+        type: string
+      sort:
+        type: integer
+      title:
+        type: string
+    type: object
   dto.CreateRole:
     properties:
-      roleName:
+      key:
+        type: string
+      name:
         type: string
     required:
-    - roleName
+    - key
+    - name
     type: object
   dto.CreateUser:
     properties:
@@ -34,7 +96,19 @@ definitions:
           type: integer
         type: array
     type: object
+  dto.DeleteMenu:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
   dto.DetailApi:
+    properties:
+      id:
+        type: integer
+    type: object
+  dto.DetailMenu:
     properties:
       id:
         type: integer
@@ -82,6 +156,16 @@ definitions:
         type: string
       path:
         type: string
+    type: object
+  dto.UpdateRole:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
     type: object
 info:
   contact: {}
@@ -252,12 +336,182 @@ paths:
       summary: 用户登录
       tags:
       - Base
+  /menu/all:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 获取所有的菜单 不分页
+      tags:
+      - Menu
+  /menu/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 菜单名
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建菜单
+      tags:
+      - Menu
+  /menu/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DeleteMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除菜单
+      tags:
+      - Menu
+  /menu/detail:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DetailMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 根据id获取菜单信息
+      tags:
+      - Menu
+  /menu/tree:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取菜单列表
+      tags:
+      - Menu
+  /menu/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 菜单名
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"修改成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 更新菜单
+      tags:
+      - Menu
+  /role/bindApi:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色id, apiId
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BindRoleApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 给角色绑定接口权限
+      tags:
+      - Role
+  /role/bindMenu:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色id, 菜单id
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BindRoleMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 给角色绑定菜单权限
+      tags:
+      - Role
   /role/create:
     post:
       consumes:
       - application/json
       parameters:
-      - description: 权限id, 权限名, 父角色id
+      - description: 角色名，角色key
         in: body
         name: data
         required: true
@@ -275,6 +529,52 @@ paths:
       summary: 创建角色
       tags:
       - Role
+  /role/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 角色名，角色key
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 更新角色
+      tags:
+      - Role
+  /user/bindRole:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户id, 角色id
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BindUserRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"绑定成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 给用户绑定角色权限
+      tags:
+      - User
   /user/create:
     post:
       parameters:

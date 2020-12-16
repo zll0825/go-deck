@@ -29,7 +29,7 @@ func CasbinHandler() gin.HandlerFunc {
 		if success {
 			c.Next()
 		} else {
-			response.FailWithDetailed(gin.H{}, "权限不足", c)
+			response.FailWithDetailed(c, gin.H{}, "权限不足")
 			c.Abort()
 			return
 		}

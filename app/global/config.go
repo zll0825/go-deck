@@ -2,6 +2,7 @@ package global
 
 import (
 	"bytes"
+	"fmt"
 	"go-deck/pkg/casbin"
 	"go-deck/pkg/gorm"
 	"go-deck/pkg/jwt"
@@ -40,4 +41,6 @@ func InitAppConfig(cfgPath string) {
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println("配置文件初始化成功")
 }

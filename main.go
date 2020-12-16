@@ -24,7 +24,6 @@ func main() {
 	fmt.Printf("starting runMode:%v, cfgPath:%v", runMode, cfgPath)
 
 	// 初始化配置文件
-	// adjust src path
 	if cfgPath == "" {
 		root, _ := os.Getwd()
 

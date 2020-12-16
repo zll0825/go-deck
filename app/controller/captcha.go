@@ -33,11 +33,11 @@ func Captcha(c *gin.Context) {
 	cp := base64Captcha.NewCaptcha(driver, store)
 	if id, b64s, err := cp.Generate(); err != nil {
 		global.Logger.Error("验证码获取失败!", zap.Any("err", err))
-		response.FailWithMessage("验证码获取失败", c)
+		response.FailWithMessage(c,"验证码获取失败")
 	} else {
-		response.OkWithDetailed(response.Captcha{
+		response.OkWithDetailed(c, response.Captcha{
 			CaptchaId: id,
 			PicPath:   b64s,
-		}, "验证码获取成功", c)
+		}, "验证码获取成功")
 	}
 }

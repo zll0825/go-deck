@@ -25,14 +25,14 @@ func Login(c *gin.Context) {
 
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
 
 	// 校验验证码
 	//if !store.Verify(req.CaptchaId, req.Captcha, true) {
-	//	response.FailWithMessage("验证码错误", c)
+	//	response.FailWithMessage("验证码错误")
 	//	c.Abort()
 	//	return
 	//}
@@ -40,7 +40,7 @@ func Login(c *gin.Context) {
 	// 查询用户
 	user, err := global.DB.FindUserByUserName(req.Username)
 	if err != nil {
-		response.FailWithMessage("用户名不存在", c)
+		response.FailWithMessage(c, "用户名不存在")
 		c.Abort()
 		return
 	}
@@ -48,7 +48,7 @@ func Login(c *gin.Context) {
 	// 校验密码
 	equal := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password))
 	if equal != nil {
-		response.FailWithMessage("用户名不存在或者密码错误", c)
+		response.FailWithMessage(c, "用户名不存在或者密码错误")
 		c.Abort()
 		return
 	}
@@ -74,15 +74,15 @@ func tokenNext(c *gin.Context, user entity.User) {
 	token, err := j.CreateToken(claims)
 	if err != nil {
 		global.Logger.Error("获取token失败", zap.Any("err", err))
-		response.FailWithMessage("获取token失败", c)
+		response.FailWithMessage(c, "获取token失败")
 		return
 	}
 
-	response.OkWithDetailed(response.LoginResponse{
+	response.OkWithDetailed(c, response.LoginResponse{
 		User:      user,
 		Token:     token,
 		ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
-	}, "登录成功", c)
+	}, "登录成功")
 }
 
 // @Tags User
@@ -96,7 +96,7 @@ func CreateUser(c *gin.Context) {
 
 	// 校验请求参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
@@ -104,7 +104,7 @@ func CreateUser(c *gin.Context) {
 	// 判断用户名是否存在
 	u, err := global.DB.FindUserByUserName(req.Username)
 	if err == nil && u != nil {
-		response.FailWithMessage("该用户名已注册", c)
+		response.FailWithMessage(c, "该用户名已注册")
 		c.Abort()
 		return
 	}
@@ -117,30 +117,37 @@ func CreateUser(c *gin.Context) {
 	err = global.DB.CreateUser(&user)
 	if err != nil {
 		global.Logger.Error("注册失败", zap.Any("err", err))
-		response.FailWithMessage("注册失败", c)
+		response.FailWithMessage(c, "注册失败")
 	} else {
-		response.OkWithMessage("注册成功", c)
+		response.OkWithMessage(c, "注册成功")
 	}
 }
 
-// 给用户绑定角色权限
+// @Tags User
+// @Summary 给用户绑定角色权限
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.BindUserRole true "用户id, 角色id"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"绑定成功"}"
+// @Router /user/bindRole [post]
 func BindRole(c *gin.Context) {
 	var req dto.BindUserRole
 
 	// 校验参数
 	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage("参数验证失败", c)
+		response.FailWithMessage(c, "参数验证失败")
 		c.Abort()
 		return
 	}
 
 	// 绑定角色
 	if err := service.BindUserRole(req.UserId, req.RoleIds); err != nil {
-		response.FailWithMessage("绑定角色失败", c)
+		response.FailWithMessage(c, "绑定角色失败")
 		c.Abort()
 		return
 	}
 
-	response.OkWithMessage("绑定角色成功", c)
+	response.OkWithMessage(c, "绑定角色成功")
 	return
 }

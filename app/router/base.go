@@ -8,7 +8,7 @@ import (
 func InitBaseRouter(Router *gin.RouterGroup) {
 	router := Router.Group("base")
 	{
-		router.GET("captcha", controller.Captcha)
+		router.POST("captcha", controller.Captcha)
 		router.POST("login", controller.Login)
 	}
 }
