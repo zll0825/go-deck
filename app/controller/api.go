@@ -125,7 +125,7 @@ func GetApiById(c *gin.Context) {
 }
 
 // @Tags Api
-// @Summary 创建基础api
+// @Summary 更新api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json

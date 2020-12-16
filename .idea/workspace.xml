@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f050e3d6-2eba-46e6-a169-07184bd8defa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/captcha.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/captcha.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/menu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/menu.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/role.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/role.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/global/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/global/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/global/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/global/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/jwt.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/response/response.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/response/response.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/router/base.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/router/base.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/router/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/zap/zap.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/zap/zap.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,25 +135,25 @@
     </state>
     <state width="782" height="466" key="DebuggerActiveHint/0.0.1680.1050@0.0.1680.1050" timestamp="1608029413864" />
     <state width="782" height="466" key="DebuggerActiveHint/0.23.1680.959@0.23.1680.959" timestamp="1608028333888" />
-    <state width="1638" height="222" key="GridCell.Tab.0.bottom" timestamp="1608109704365">
+    <state width="1638" height="222" key="GridCell.Tab.0.bottom" timestamp="1608110365158">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="222" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1608109704365" />
+    <state width="1638" height="222" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1608110365158" />
     <state width="1638" height="364" key="GridCell.Tab.0.bottom/0.23.1680.959@0.23.1680.959" timestamp="1608038520376" />
-    <state width="1638" height="222" key="GridCell.Tab.0.center" timestamp="1608109704364">
+    <state width="1638" height="222" key="GridCell.Tab.0.center" timestamp="1608110365157">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="222" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1608109704364" />
+    <state width="1638" height="222" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1608110365157" />
     <state width="1638" height="364" key="GridCell.Tab.0.center/0.23.1680.959@0.23.1680.959" timestamp="1608038520375" />
-    <state width="1638" height="222" key="GridCell.Tab.0.left" timestamp="1608109704363">
+    <state width="1638" height="222" key="GridCell.Tab.0.left" timestamp="1608110365156">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="222" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1608109704363" />
+    <state width="1638" height="222" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1608110365156" />
     <state width="1638" height="364" key="GridCell.Tab.0.left/0.23.1680.959@0.23.1680.959" timestamp="1608038520374" />
-    <state width="1638" height="222" key="GridCell.Tab.0.right" timestamp="1608109704365">
+    <state width="1638" height="222" key="GridCell.Tab.0.right" timestamp="1608110365158">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="222" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1608109704365" />
+    <state width="1638" height="222" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1608110365158" />
     <state width="1638" height="364" key="GridCell.Tab.0.right/0.23.1680.959@0.23.1680.959" timestamp="1608038520375" />
     <state width="1638" height="364" key="GridCell.Tab.1.bottom" timestamp="1608108951391">
       <screen x="0" y="0" width="1680" height="1050" />
