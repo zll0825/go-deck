@@ -18,6 +18,7 @@ require (
 	github.com/lestrrat-go/strftime v1.0.3 // indirect
 	github.com/mojocn/base64Captcha v1.3.1
 	github.com/satori/go.uuid v1.2.0
+	github.com/spf13/cobra v1.1.1
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.5.1
 	github.com/tebeka/strftime v0.1.5 // indirect
