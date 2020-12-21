@@ -124,6 +124,137 @@ func CreateUser(c *gin.Context) {
 }
 
 // @Tags User
+// @Summary 删除User
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.DeleteUser true "ID"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Router /user/delete [post]
+func DeleteUser(c *gin.Context) {
+	var req dto.DeleteUser
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	if err := service.DeleteByIds(entity.User{}, req.Ids); err != nil {
+		global.Logger.Error("删除失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "删除失败")
+	} else {
+		response.OkWithMessage(c, "删除成功")
+	}
+}
+
+// @Tags User
+// @Summary 更新User
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.UpdateUser true "用户名"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
+// @Router /user/update [post]
+func UpdateUser(c *gin.Context) {
+	var req dto.UpdateUser
+
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	api := entity.User{
+		ID:        req.Id,
+		Username:  req.Username,
+		Password:  req.Password,
+	}
+
+	if err := service.UpdateById(&api, &entity.User{}, req.Id); err != nil {
+		global.Logger.Error("修改失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "修改失败")
+	} else {
+		response.OkWithMessage(c, "修改成功")
+	}
+}
+
+// @Tags User
+// @Summary 分页获取User列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.SearchUser true "分页获取User列表"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /user/list [post]
+func GetUserList(c *gin.Context) {
+	var req dto.SearchUser
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	if total, list, err := service.GetUserList(req); err != nil {
+		global.Logger.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "获取失败")
+	} else {
+		response.OkWithDetailed(c, response.PageResult{
+			List:  list,
+			Total: total,
+			Page:  req.Page,
+			Size:  req.Size,
+		}, "获取成功")
+	}
+}
+
+// @Tags User
+// @Summary 根据id获取User
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.DetailUser true "根据id获取User"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /user/detail [post]
+func GetUserById(c *gin.Context) {
+	var req dto.DetailUser
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	role := entity.User{}
+	err := service.DetailById(&role, req.Id)
+	if err != nil {
+		global.Logger.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "获取失败")
+	} else {
+		response.OkWithData(c, role)
+	}
+}
+
+// @Tags User
+// @Summary 获取所有的User 不分页
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /user/all [post]
+func GetAllUsers(c *gin.Context) {
+	if apis, err := global.DB.AllUsers(); err != nil {
+		global.Logger.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "获取失败")
+	} else {
+		response.OkWithDetailed(c, apis, "获取成功")
+	}
+}
+
+
+// @Tags User
 // @Summary 给用户绑定角色权限
 // @Security ApiKeyAuth
 // @accept application/json

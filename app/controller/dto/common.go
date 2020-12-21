@@ -5,14 +5,14 @@ type PageReq struct {
 	Size int `json:"size" form:"size"`
 }
 
-type DetailReq struct {
-	Id int `json:"id" form:"id"`
+type DeleteReq struct {
+	Ids []int `json:"ids" form:"ids"`
 }
 
 type UpdateReq struct {
 	Id int `json:"id" form:"id"`
 }
 
-type DeleteReq struct {
-	Ids []int `json:"ids" form:"ids"`
+type DetailReq struct {
+	Id int `json:"id" form:"id"`
 }

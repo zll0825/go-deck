@@ -74,6 +74,46 @@ func DeleteMenu(c *gin.Context) {
 }
 
 // @Tags Menu
+// @Summary 更新菜单
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.UpdateApi true "菜单名"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
+// @Router /menu/update [post]
+func UpdateMenu(c *gin.Context) {
+	var req dto.UpdateMenu
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	menu := entity.Menu{
+		ID:          req.Id,
+		MenuLevel:   req.MenuLevel,
+		ParentId:    req.ParentId,
+		Path:        req.Path,
+		Name:        req.Name,
+		Hidden:      req.Hidden,
+		Component:   req.Component,
+		Sort:        req.Sort,
+		KeepAlive:   req.KeepAlive,
+		DefaultMenu: req.DefaultMenu,
+		Title:       req.Title,
+		Icon:        req.Icon,
+	}
+
+	if err := service.UpdateById(&menu, &entity.Menu{}, req.Id); err != nil {
+		global.Logger.Error("修改失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "修改失败")
+	} else {
+		response.OkWithMessage(c, "修改成功")
+	}
+}
+
+// @Tags Menu
 // @Summary 分页获取菜单列表
 // @Security ApiKeyAuth
 // @accept application/json
@@ -126,46 +166,6 @@ func GetMenuById(c *gin.Context) {
 		response.FailWithMessage(c, "获取失败")
 	} else {
 		response.OkWithData(c, api)
-	}
-}
-
-// @Tags Menu
-// @Summary 更新菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body dto.UpdateApi true "菜单名"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /menu/update [post]
-func UpdateMenu(c *gin.Context) {
-	var req dto.UpdateMenu
-	// 校验参数
-	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage(c, "参数验证失败")
-		c.Abort()
-		return
-	}
-
-	menu := entity.Menu{
-		ID:          req.Id,
-		MenuLevel:   req.MenuLevel,
-		ParentId:    req.ParentId,
-		Path:        req.Path,
-		Name:        req.Name,
-		Hidden:      req.Hidden,
-		Component:   req.Component,
-		Sort:        req.Sort,
-		KeepAlive:   req.KeepAlive,
-		DefaultMenu: req.DefaultMenu,
-		Title:       req.Title,
-		Icon:        req.Icon,
-	}
-
-	if err := service.UpdateById(&menu, &entity.Menu{}, req.Id); err != nil {
-		global.Logger.Error("修改失败!", zap.Any("err", err))
-		response.FailWithMessage(c, "修改失败")
-	} else {
-		response.OkWithMessage(c, "修改成功")
 	}
 }
 

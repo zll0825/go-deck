@@ -68,6 +68,39 @@ func DeleteApi(c *gin.Context) {
 }
 
 // @Tags Api
+// @Summary 更新api
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.UpdateApi true "api路径, api中文描述, api组, 方法"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
+// @Router /api/update [post]
+func UpdateApi(c *gin.Context) {
+	var req dto.UpdateApi
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	api := entity.Api{
+		ID:          req.Id,
+		Path:        req.Path,
+		Description: req.Description,
+		ApiGroup:    req.ApiGroup,
+		Method:      req.Method,
+	}
+
+	if err := service.UpdateById(&api, &entity.Api{}, req.Id); err != nil {
+		global.Logger.Error("修改失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "修改失败")
+	} else {
+		response.OkWithMessage(c, "修改成功")
+	}
+}
+
+// @Tags Api
 // @Summary 分页获取API列表
 // @Security ApiKeyAuth
 // @accept application/json
@@ -121,39 +154,6 @@ func GetApiById(c *gin.Context) {
 		response.FailWithMessage(c, "获取失败")
 	} else {
 		response.OkWithData(c, api)
-	}
-}
-
-// @Tags Api
-// @Summary 更新api
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body dto.UpdateApi true "api路径, api中文描述, api组, 方法"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /api/update [post]
-func UpdateApi(c *gin.Context) {
-	var req dto.UpdateApi
-	// 校验参数
-	if err := c.ShouldBind(&req); err != nil {
-		response.FailWithMessage(c, "参数验证失败")
-		c.Abort()
-		return
-	}
-
-	api := entity.Api{
-		ID:          req.Id,
-		Path:        req.Path,
-		Description: req.Description,
-		ApiGroup:    req.ApiGroup,
-		Method:      req.Method,
-	}
-
-	if err := service.UpdateById(&api, &entity.Api{}, req.Id); err != nil {
-		global.Logger.Error("修改失败!", zap.Any("err", err))
-		response.FailWithMessage(c, "修改失败")
-	} else {
-		response.OkWithMessage(c, "修改成功")
 	}
 }
 

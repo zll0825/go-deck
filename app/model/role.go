@@ -4,6 +4,11 @@ import (
 	"go-deck/app/model/entity"
 )
 
+func (d *Dao) AllRoles() (data []entity.Role, err error) {
+	err = SystemDB().Find(&data).Error
+	return
+}
+
 func (d *Dao) FindRoleByRoleId(roleId int) (entity.Role, error) {
 	var role entity.Role
 

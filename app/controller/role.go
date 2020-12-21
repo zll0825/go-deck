@@ -7,6 +7,7 @@ import (
 	"go-deck/app/model/entity"
 	"go-deck/app/response"
 	"go-deck/app/service"
+	"go.uber.org/zap"
 )
 
 // @Tags Role
@@ -39,6 +40,31 @@ func CreateRole(c *gin.Context) {
 }
 
 // @Tags Role
+// @Summary 删除Role
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.DeleteRole true "ID"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Router /api/delete [post]
+func DeleteRole(c *gin.Context) {
+	var req dto.DeleteRole
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	if err := service.DeleteByIds(entity.Role{}, req.Ids); err != nil {
+		global.Logger.Error("删除失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "删除失败")
+	} else {
+		response.OkWithMessage(c, "删除成功")
+	}
+}
+
+// @Tags Role
 // @Summary 更新角色
 // @Security ApiKeyAuth
 // @accept application/json
@@ -57,6 +83,92 @@ func UpdateRole(c *gin.Context) {
 	}
 
 	// todo:更新角色
+
+	api := entity.Role{
+		ID:        req.Id,
+		Name:      req.Name,
+		Key:       req.Key,
+	}
+
+	if err := service.UpdateById(&api, &entity.Api{}, req.Id); err != nil {
+		global.Logger.Error("修改失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "修改失败")
+	} else {
+		response.OkWithMessage(c, "修改成功")
+	}
+}
+
+// @Tags Role
+// @Summary 分页获取Role列表
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.SearchRole true "分页获取Role列表"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /api/list [post]
+func GetRoleList(c *gin.Context) {
+	var req dto.SearchRole
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	if total, list, err := service.GetRoleList(req); err != nil {
+		global.Logger.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "获取失败")
+	} else {
+		response.OkWithDetailed(c, response.PageResult{
+			List:  list,
+			Total: total,
+			Page:  req.Page,
+			Size:  req.Size,
+		}, "获取成功")
+	}
+}
+
+// @Tags Role
+// @Summary 根据id获取Role
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dto.DetailRole true "根据id获取Role"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /role/detail [post]
+func GetRoleById(c *gin.Context) {
+	var req dto.DetailRole
+	// 校验参数
+	if err := c.ShouldBind(&req); err != nil {
+		response.FailWithMessage(c, "参数验证失败")
+		c.Abort()
+		return
+	}
+
+	role := entity.Role{}
+	err := service.DetailById(&role, req.Id)
+	if err != nil {
+		global.Logger.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "获取失败")
+	} else {
+		response.OkWithData(c, role)
+	}
+}
+
+// @Tags Role
+// @Summary 获取所有的Role 不分页
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /role/all [post]
+func GetAllRoles(c *gin.Context) {
+	if apis, err := global.DB.AllRoles(); err != nil {
+		global.Logger.Error("获取失败!", zap.Any("err", err))
+		response.FailWithMessage(c, "获取失败")
+	} else {
+		response.OkWithDetailed(c, apis, "获取成功")
+	}
 }
 
 // @Tags Role

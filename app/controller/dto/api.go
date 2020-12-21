@@ -11,6 +11,11 @@ type DeleteApi struct {
 	DeleteReq
 }
 
+type UpdateApi struct {
+	UpdateReq
+	CreateApi
+}
+
 type SearchApi struct {
 	PageReq
 	CreateApi
@@ -18,9 +23,4 @@ type SearchApi struct {
 
 type DetailApi struct {
 	DetailReq
-}
-
-type UpdateApi struct {
-	UpdateReq
-	CreateApi
 }

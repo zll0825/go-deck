@@ -9,12 +9,13 @@ import (
 func InitUserRouter(Router *gin.RouterGroup) {
 	router := Router.Group("user").Use(middleware.OperationRecord())
 	{
-		router.POST("create", controller.CreateUser) // 创建用户
+		router.POST("create", controller.CreateUser)  // 创建用户
+		router.POST("delete", controller.DeleteUser)  // 删除用户
+		router.POST("update", controller.UpdateUser)  // 修改用户
+		router.POST("list", controller.GetUserList)   // 用户列表
+		router.POST("detail", controller.GetUserById) // 用户详情
+		router.POST("all", controller.GetAllUsers)    // 所有用户
+
 		router.POST("bindRole", controller.BindRole) // 给用户分配角色
-		//UserRouter.POST("changePassword", controllers.ChangePassword)     // 修改密码
-		//UserRouter.POST("getUserList", controllers.GetUserList)           // 分页获取用户列表
-		//UserRouter.POST("setUserAuthority", controllers.SetUserAuthority) // 设置用户权限
-		//UserRouter.DELETE("deleteUser", controllers.DeleteUser)           // 删除用户
-		//UserRouter.PUT("setUserInfo", controllers.SetUserInfo)            // 设置用户信息
 	}
 }

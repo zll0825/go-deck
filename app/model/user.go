@@ -5,6 +5,11 @@ import (
 	"go-deck/app/util"
 )
 
+func (d *Dao) AllUsers() (data []entity.User, err error) {
+	err = SystemDB().Find(&data).Error
+	return
+}
+
 func (d *Dao) Login(user *entity.User) (*entity.User, error) {
 	var data entity.User
 	user.Password = util.HashPassword(user.Password)

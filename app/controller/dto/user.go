@@ -14,6 +14,24 @@ type CreateUser struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type DeleteUser struct {
+	DeleteReq
+}
+
+type UpdateUser struct {
+	UpdateReq
+	CreateUser
+}
+
+type SearchUser struct {
+	PageReq
+	CreateUser
+}
+
+type DetailUser struct {
+	DetailReq
+}
+
 //
 type BindUserRole struct {
 	UserId  int   `json:"userId" binding:"required"`

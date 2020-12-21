@@ -5,9 +5,22 @@ type CreateRole struct {
 	Key string `json:"key" binding:"required"`
 }
 
+type DeleteRole struct {
+	DeleteReq
+}
+
 type UpdateRole struct {
-	Id       int    `json:"id" binding:"required"`
-	RoleName string `json:"name" binding:"required"`
+	UpdateReq
+	CreateRole
+}
+
+type SearchRole struct {
+	PageReq
+	CreateRole
+}
+
+type DetailRole struct {
+	DetailReq
 }
 
 type BindRoleMenu struct {

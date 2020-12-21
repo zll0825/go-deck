@@ -18,6 +18,11 @@ type DeleteMenu struct {
 	DeleteReq
 }
 
+type UpdateMenu struct {
+	UpdateReq
+	CreateMenu
+}
+
 type SearchMenu struct {
 	PageReq
 	CreateMenu
@@ -25,9 +30,4 @@ type SearchMenu struct {
 
 type DetailMenu struct {
 	DetailReq
-}
-
-type UpdateMenu struct {
-	UpdateReq
-	CreateMenu
 }

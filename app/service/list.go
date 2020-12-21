@@ -36,3 +36,42 @@ func GetApiList(params dto.SearchApi) (total int64, data []entity.Api, err error
 
 	return
 }
+
+func GetRoleList(params dto.SearchRole) (total int64, data []entity.Role, err error) {
+	db := global.DB.System.Model(entity.Role{})
+
+	if params.Name != "" {
+		db = db.Where("name LIKE ?", "%"+params.Name+"%")
+	}
+
+	if params.Key != "" {
+		db = db.Where("key LIKE ?", "%"+params.Key+"%")
+	}
+	err = db.Count(&total).Error
+	if err != nil {
+		return 0, nil, err
+	}
+
+	offset, limit := util.Pagination(params.Page, params.Size)
+	err = db.Limit(limit).Offset(offset).Find(&data).Error
+
+	return
+}
+
+func GetUserList(params dto.SearchUser) (total int64, data []entity.User, err error) {
+	db := global.DB.System.Model(entity.Role{})
+
+	if params.Username != "" {
+		db = db.Where("username LIKE ?", "%"+params.Username+"%")
+	}
+
+	err = db.Count(&total).Error
+	if err != nil {
+		return 0, nil, err
+	}
+
+	offset, limit := util.Pagination(params.Page, params.Size)
+	err = db.Limit(limit).Offset(offset).Find(&data).Error
+
+	return
+}
