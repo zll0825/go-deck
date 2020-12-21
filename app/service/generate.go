@@ -2,6 +2,8 @@ package service
 
 import (
 	"bytes"
+	"go-deck/app/util"
+
 	"gorm.io/gorm"
 	"text/template"
 )
@@ -9,6 +11,8 @@ import (
 type Generate struct {
 	DB *gorm.DB
 
+	DBName    string
+	TableName string
 }
 
 type TplData struct {
@@ -60,7 +64,25 @@ func NewGenerate(DB *gorm.DB) *Generate {
 	}
 }
 
-func (g *Generate)GetDBs() ([]DB, error)  {
+func (g *Generate) SetTableName(tableName string) *Generate {
+	g.TableName = tableName
+	return g
+}
+
+func (g *Generate) GetTableName() string {
+	return g.TableName
+}
+
+func (g *Generate) SetDBName(dbName string) *Generate {
+	g.DBName = dbName
+	return g
+}
+
+func (g *Generate) GetDBName() string {
+	return g.DBName
+}
+
+func (g *Generate) GetDBs() ([]DB, error) {
 	db := make([]DB, 0)
 	sql := "SELECT SCHEMA_NAME AS `database` FROM INFORMATION_SCHEMA.SCHEMATA;"
 	err := g.DB.Raw(sql).Scan(&db).Error
@@ -71,7 +93,7 @@ func (g *Generate)GetDBs() ([]DB, error)  {
 	return db, err
 }
 
-func (g *Generate)GetTables(dbName string) ([]Table, error) {
+func (g *Generate) GetTables(dbName string) ([]Table, error) {
 	table := make([]Table, 0)
 	sql := "SELECT TABLE_NAME as table_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?"
 	err := g.DB.Raw(sql, dbName).Scan(&table).Error
@@ -82,7 +104,7 @@ func (g *Generate)GetTables(dbName string) ([]Table, error) {
 	return table, err
 }
 
-func (g *Generate) GetColumns(tableName, dbName string) ([]Column, error) {
+func (g *Generate) GetColumns() ([]Column, error) {
 	column := make([]Column, 0)
 	sql := `
 SELECT 
@@ -97,8 +119,8 @@ CASE DATA_TYPE
 	WHEN 'bigint' THEN c.NUMERIC_PRECISION ELSE '' END AS data_type_long,
 COLUMN_COMMENT column_comment 
 FROM INFORMATION_SCHEMA.COLUMNS c 
-WHERE table_name = ? AND table_schema = ?`
-	err := g.DB.Raw(sql, tableName, dbName).Scan(&column).Error
+WHERE table_schema = ? AND table_name = ?`
+	err := g.DB.Raw(sql, g.GetDBName(), g.GetTableName()).Scan(&column).Error
 	if err != nil {
 		return nil, err
 	}
@@ -106,29 +128,36 @@ WHERE table_name = ? AND table_schema = ?`
 	return column, nil
 }
 
-func (g *Generate) GenerateFile()  {
+func (g *Generate) GenerateFile() {
 }
 
-func (g *Generate) BuildData()  {
+func (g *Generate) BuildData() error {
+	columns, err := g.GetColumns()
+	if err != nil {
+		return err
+	}
+
 	fields := make([]Field, 0)
-	fields = append(fields, Field{
-		FieldName:       "1",
-		FieldDesc:       "2",
-		FieldType:       "3",
-		FieldJson:       "4",
-		DataType:        "5",
-		DataTypeLong:    "6",
-		Comment:         "7",
-		ColumnName:      "8",
-		FieldSearchType: "9",
-		DictType:        "10",
-	})
+	for _, column := range columns {
+		fields = append(fields, Field{
+			FieldName:       util.SnakeToCamel(column.ColumnName),
+			FieldDesc:       column.ColumnComment,
+			FieldType:       getGoType(column.DataType),
+			FieldJson:       util.SnakeToCamelLower(column.ColumnName),
+			DataType:        column.DataType,
+			DataTypeLong:    column.DataTypeLong,
+			Comment:         column.ColumnComment,
+			ColumnName:      column.ColumnName,
+			FieldSearchType: "",
+			DictType:        "",
+		})
+	}
 	tplData := &TplData{
-		StructName:         "a",
-		TableName:          "b",
-		PackageName:        "c",
-		Abbreviation:       "d",
-		Description:        "e",
+		StructName:         g.TableName,
+		TableName:          g.TableName,
+		PackageName:        "a",
+		Abbreviation:       "b",
+		Description:        "c",
 		AutoCreateApiToSql: false,
 		AutoMoveFile:       false,
 		Fields:             fields,
@@ -136,18 +165,49 @@ func (g *Generate) BuildData()  {
 
 	tpl, err := g.LoadTemplate("/Users/zll/Develop/go/src/github.com/zll0825/go-deck/cmd/template/entity.go.tpl")
 	if err != nil {
-		return
+		return err
 	}
 
 	var buf bytes.Buffer
 	err = tpl.Execute(&buf, tplData)
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
 
-	println( buf.String())
+	println(buf.String())
+	return nil
 }
 
 func (g *Generate) LoadTemplate(path string) (*template.Template, error) {
 	return template.ParseFiles(path)
+}
+
+const (
+	golangByteArray  = "[]byte"
+	golangInt        = "int"
+	golangInt64      = "int64"
+	golangFloat32    = "float32"
+	golangFloat64    = "float64"
+	golangTime       = "time.Time"
+)
+
+func getGoType(dataType string) string {
+	switch dataType {
+	case "tinyint", "int", "smallint", "mediumint":
+		return golangInt
+	case "bigint":
+		return golangInt64
+	case "char", "enum", "varchar", "longtext", "mediumtext", "text", "tinytext":
+		return "string"
+	case "date", "datetime", "time", "timestamp":
+		return golangTime
+	case "decimal", "double":
+		return golangFloat64
+	case "float":
+		return golangFloat32
+	case "binary", "blob", "longblob", "mediumblob", "varbinary":
+		return golangByteArray
+	}
+
+	return ""
 }

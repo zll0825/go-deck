@@ -22,21 +22,7 @@ var generateCmd = &cobra.Command{
 			fmt.Println("tableName is required")
 		}
 
-		g := service.NewGenerate(model.SystemDB())
-
-		table, err := g.GetTables(dbName)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		fmt.Printf("%+v", table)
-		column, err := g.GetColumns(tableName, dbName)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-
-		fmt.Printf("%+v", column)
+		g := service.NewGenerate(model.SystemDB()).SetDBName(dbName).SetTableName(tableName)
 
 		g.BuildData()
 

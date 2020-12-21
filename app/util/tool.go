@@ -3,9 +3,11 @@ package util
 import (
 	"fmt"
 	"reflect"
+	"strings"
+	"unicode"
 )
 
-//DiffStruct 比较相同类型结构体的不同的值
+// 比较相同类型结构体的不同的值
 func DiffStruct(before, after interface{}) (bf, af map[string]interface{}, err error) {
 	bf = make(map[string]interface{}, 0)
 	af = make(map[string]interface{}, 0)
@@ -59,6 +61,7 @@ func DiffStruct(before, after interface{}) (bf, af map[string]interface{}, err e
 	return bf, af, err
 }
 
+// 分页，计算开始结束
 func Pagination(page int, size int) (offset int, limit int) {
 	if page == 0 {
 		page = 1
@@ -73,6 +76,7 @@ func Pagination(page int, size int) (offset int, limit int) {
 	return
 }
 
+// 比较字符串类型切片
 func GetStringDifference(slice1, slice2 []string) (in1NotIn2, in2NotIn1 []string) {
 	m := make(map[string]int)
 
@@ -94,6 +98,7 @@ func GetStringDifference(slice1, slice2 []string) (in1NotIn2, in2NotIn1 []string
 	return
 }
 
+// 比较int类型切片
 func GetIntDifference(slice1, slice2 []int) (in1NotIn2, in2NotIn1 []int) {
 	m := make(map[int]int)
 
@@ -151,4 +156,72 @@ func intersectString(slice1 []string, slice2 []string) []string {
 		}
 	}
 	return intersection
+}
+
+// 驼峰转蛇形 XxYy to xx_yy , XxYY to xx_y_y
+func bCamel2Snake(s string) string {
+	data := make([]byte, 0, len(s)*2)
+	j := false
+	num := len(s)
+	for i := 0; i < num; i++ {
+		d := s[i]
+		// or通过ASCII码进行大小写的转化
+		// 65-90（A-Z），97-122（a-z）
+		//判断如果字母为大写的A-Z就在前面拼接一个_
+		if i > 0 && d >= 'A' && d <= 'Z' && j {
+			data = append(data, '_')
+		}
+		if d != '_' {
+			j = true
+		}
+		data = append(data, d)
+	}
+	//ToLower把大写字母统一转小写
+	return strings.ToLower(string(data[:]))
+}
+
+// 蛇形转大驼峰 xx_yy to XxYx  xx_y_y to XxYY
+func Snake2BCamel(s string) string {
+	data := make([]byte, 0, len(s))
+	j := false
+	k := false
+	num := len(s) - 1
+	for i := 0; i <= num; i++ {
+		d := s[i]
+		if k == false && d >= 'A' && d <= 'Z' {
+			k = true
+		}
+		if d >= 'a' && d <= 'z' && (j || k == false) {
+			d = d - 32
+			j = false
+			k = true
+		}
+		if k && d == '_' && num > i && s[i+1] >= 'a' && s[i+1] <= 'z' {
+			j = true
+			continue
+		}
+		data = append(data, d)
+	}
+	return string(data[:])
+}
+
+// 蛇形转小驼峰 xx_yy to xxYx  xx_y_y to xxYY
+func Snake2SCamel(s string) string {
+	return LcFirst(Snake2BCamel(s))
+}
+
+// 首字母大写
+func UcFirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToUpper(v)) + str[i+1:]
+	}
+	return ""
+}
+
+// 首字母小写
+func LcFirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToLower(v)) + str[i+1:]
+	}
+	return ""
 }
