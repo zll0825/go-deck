@@ -46,7 +46,7 @@ func CreateRole(c *gin.Context) {
 // @Produce application/json
 // @Param data body dto.DeleteRole true "ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /api/delete [post]
+// @Router /role/delete [post]
 func DeleteRole(c *gin.Context) {
 	var req dto.DeleteRole
 	// 校验参数
@@ -105,7 +105,7 @@ func UpdateRole(c *gin.Context) {
 // @Produce application/json
 // @Param data body dto.SearchRole true "分页获取Role列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/list [post]
+// @Router /role/list [post]
 func GetRoleList(c *gin.Context) {
 	var req dto.SearchRole
 	// 校验参数
