@@ -75,3 +75,42 @@ func GetUserList(params dto.SearchUser) (total int64, data []entity.User, err er
 
 	return
 }
+
+func GetDictTypeList(params dto.SearchDictType)(total int64, data []entity.DictType, err error) {
+	db := global.DB.System.Model(entity.Role{})
+
+	if params.Name != "" {
+		db = db.Where("name like ?", "%"+params.Name+"%")
+	}
+	if params.Type != "" {
+		db = db.Where("type like ?", "%"+params.Type+"%")
+	}
+
+	err = db.Count(&total).Error
+	if err != nil {
+		return 0, nil, err
+	}
+
+	offset, limit := util.Pagination(params.Page, params.Size)
+	err = db.Limit(limit).Offset(offset).Find(&data).Error
+
+	return
+}
+
+func GetDictDataList(params dto.SearchDictData)(total int64, data []entity.DictData, err error) {
+	db := global.DB.System.Model(entity.Role{})
+
+	if params.TypeID > 0 {
+		db = db.Where("type_id = ?", params.TypeID)
+	}
+
+	err = db.Count(&total).Error
+	if err != nil {
+		return 0, nil, err
+	}
+
+	offset, limit := util.Pagination(params.Page, params.Size)
+	err = db.Limit(limit).Offset(offset).Find(&data).Error
+
+	return
+}

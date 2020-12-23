@@ -46,6 +46,30 @@ definitions:
       path:
         type: string
     type: object
+  dto.CreateDictData:
+    properties:
+      desc:
+        type: string
+      name:
+        type: string
+      status:
+        type: integer
+      type:
+        type: string
+      typeID:
+        type: integer
+    type: object
+  dto.CreateDictType:
+    properties:
+      desc:
+        type: string
+      name:
+        type: string
+      status:
+        type: integer
+      type:
+        type: string
+    type: object
   dto.CreateMenu:
     properties:
       component:
@@ -96,6 +120,20 @@ definitions:
           type: integer
         type: array
     type: object
+  dto.DeleteDictData:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  dto.DeleteDictType:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
   dto.DeleteMenu:
     properties:
       ids:
@@ -118,6 +156,16 @@ definitions:
         type: array
     type: object
   dto.DetailApi:
+    properties:
+      id:
+        type: integer
+    type: object
+  dto.DetailDictData:
+    properties:
+      id:
+        type: integer
+    type: object
+  dto.DetailDictType:
     properties:
       id:
         type: integer
@@ -168,6 +216,38 @@ definitions:
       size:
         type: integer
     type: object
+  dto.SearchDictData:
+    properties:
+      desc:
+        type: string
+      name:
+        type: string
+      page:
+        type: integer
+      size:
+        type: integer
+      status:
+        type: integer
+      type:
+        type: string
+      typeID:
+        type: integer
+    type: object
+  dto.SearchDictType:
+    properties:
+      desc:
+        type: string
+      name:
+        type: string
+      page:
+        type: integer
+      size:
+        type: integer
+      status:
+        type: integer
+      type:
+        type: string
+    type: object
   dto.SearchRole:
     properties:
       key:
@@ -207,6 +287,34 @@ definitions:
       method:
         type: string
       path:
+        type: string
+    type: object
+  dto.UpdateDictData:
+    properties:
+      desc:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: integer
+      type:
+        type: string
+      typeID:
+        type: integer
+    type: object
+  dto.UpdateDictType:
+    properties:
+      desc:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: integer
+      type:
         type: string
     type: object
   dto.UpdateRole:
@@ -285,7 +393,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/dto.DeleteRole'
+          $ref: '#/definitions/dto.DeleteApi'
       produces:
       - application/json
       responses:
@@ -295,9 +403,9 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 删除Role
+      summary: 删除api
       tags:
-      - Role
+      - Api
   /api/detail:
     post:
       consumes:
@@ -326,12 +434,12 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 分页获取Role列表
+      - description: 分页获取API列表
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/dto.SearchRole'
+          $ref: '#/definitions/dto.SearchApi'
       produces:
       - application/json
       responses:
@@ -341,9 +449,9 @@ paths:
             type: string
       security:
       - ApiKeyAuth: []
-      summary: 分页获取Role列表
+      summary: 分页获取API列表
       tags:
-      - Role
+      - Api
   /api/update:
     post:
       consumes:
@@ -368,7 +476,7 @@ paths:
       tags:
       - Api
   /base/captcha:
-    get:
+    post:
       consumes:
       - application/json
       produces:
@@ -402,6 +510,252 @@ paths:
       summary: 用户登录
       tags:
       - Base
+  /dictData/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: dictData路径, dictData中文描述, dictData组, 方法
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - DictDataKeyAuth: []
+      summary: 创建dictData
+      tags:
+      - DictData
+  /dictData/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DeleteDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          schema:
+            type: string
+      security:
+      - DictDataKeyAuth: []
+      summary: 删除dictData
+      tags:
+      - DictData
+  /dictData/detail:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 根据id获取dictData
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DetailDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - DictDataKeyAuth: []
+      summary: 根据id获取dictData
+      tags:
+      - DictData
+  /dictData/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 分页获取API列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SearchDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - DictDataKeyAuth: []
+      summary: 分页获取API列表
+      tags:
+      - DictData
+  /dictData/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: dictData路径, dictData中文描述, dictData组, 方法
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"修改成功"}'
+          schema:
+            type: string
+      security:
+      - DictDataKeyAuth: []
+      summary: 更新dictData
+      tags:
+      - DictData
+  /dictType/all:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - DictTypeKeyAuth: []
+      summary: 获取所有的DictType 不分页
+      tags:
+      - DictType
+  /dictType/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: dictType路径, dictType中文描述, dictType组, 方法
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"创建成功"}'
+          schema:
+            type: string
+      security:
+      - DictTypeKeyAuth: []
+      summary: 创建dictType
+      tags:
+      - DictType
+  /dictType/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DeleteDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          schema:
+            type: string
+      security:
+      - DictTypeKeyAuth: []
+      summary: 删除dictType
+      tags:
+      - DictType
+  /dictType/detail:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 根据id获取dictType
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DetailDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - DictTypeKeyAuth: []
+      summary: 根据id获取dictType
+      tags:
+      - DictType
+  /dictType/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 分页获取API列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SearchDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - DictTypeKeyAuth: []
+      summary: 分页获取API列表
+      tags:
+      - DictType
+  /dictType/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: dictType路径, dictType中文描述, dictType组, 方法
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"修改成功"}'
+          schema:
+            type: string
+      security:
+      - DictTypeKeyAuth: []
+      summary: 更新dictType
+      tags:
+      - DictType
   /menu/all:
     post:
       consumes:
@@ -611,6 +965,29 @@ paths:
       summary: 创建角色
       tags:
       - Role
+  /role/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DeleteRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除Role
+      tags:
+      - Role
   /role/detail:
     post:
       consumes:
@@ -632,6 +1009,29 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 根据id获取Role
+      tags:
+      - Role
+  /role/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 分页获取Role列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SearchRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取Role列表
       tags:
       - Role
   /role/update:
