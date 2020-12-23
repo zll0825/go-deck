@@ -13,7 +13,7 @@ func DeleteByIds(entity interface{}, ids []int) error {
 
 func DetailById(entity interface{}, id int) error {
 	db := global.DB.System
-	return db.Debug().Model(entity).Find(entity, id).Error
+	return db.Model(entity).Find(entity, id).Error
 }
 
 func UpdateById(new interface{}, old interface{}, id int) error {

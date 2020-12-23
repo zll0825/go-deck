@@ -1,10 +1,10 @@
 package dto
 
 type CreateApi struct {
-	Path        string `json:"path" gorm:"comment:api路径"`
-	Description string `json:"description" gorm:"comment:api中文描述"`
-	ApiGroup    string `json:"apiGroup" gorm:"comment:api组"`
-	Method      string `json:"method" gorm:"default:POST" gorm:"comment:方法"`
+	Path        string `json:"path" binding:"required"`
+	Description string `json:"description"`
+	ApiGroup    string `json:"apiGroup" binding:"required"`
+	Method      string `json:"method" binding:"required"`
 }
 
 type DeleteApi struct {

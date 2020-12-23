@@ -28,11 +28,11 @@ func CreateDictData(c *gin.Context) {
 	}
 
 	dictData := entity.DictData{
-		TypeID:    req.TypeID,
-		Label:     req.Label,
-		Value:     req.Value,
-		Desc:      req.Desc,
-		Status:    0,
+		TypeID:      req.TypeId,
+		Label:       req.Label,
+		Value:       req.Value,
+		Description: req.Description,
+		Status:      0,
 	}
 
 	if err := global.DB.CreateDictData(&dictData); err != nil {
@@ -86,12 +86,12 @@ func UpdateDictData(c *gin.Context) {
 	}
 
 	dictData := entity.DictData{
-		ID:        req.Id,
-		TypeID:    req.TypeID,
-		Label:     req.Label,
-		Value:     req.Value,
-		Desc:      req.Desc,
-		Status:    0,
+		ID:          req.Id,
+		TypeID:      req.TypeId,
+		Label:       req.Label,
+		Value:       req.Value,
+		Description: req.Description,
+		Status:      0,
 	}
 
 	if err := service.UpdateById(&dictData, &entity.DictData{}, req.Id); err != nil {

@@ -28,10 +28,10 @@ func CreateDictType(c *gin.Context) {
 	}
 
 	dictType := entity.DictType{
-		Name:      req.Name,
-		Type:      req.Type,
-		Desc:      req.Desc,
-		Status:    0,
+		Name:        req.Name,
+		Type:        req.Type,
+		Description: req.Description,
+		Status:      0,
 	}
 
 	if err := global.DB.CreateDictType(&dictType); err != nil {
@@ -85,11 +85,11 @@ func UpdateDictType(c *gin.Context) {
 	}
 
 	dictType := entity.DictType{
-		ID:        req.Id,
-		Name:      req.Name,
-		Type:      req.Type,
-		Desc:      req.Desc,
-		Status:    0,
+		ID:          req.Id,
+		Name:        req.Name,
+		Type:        req.Type,
+		Description: req.Description,
+		Status:      0,
 	}
 
 	if err := service.UpdateById(&dictType, &entity.DictType{}, req.Id); err != nil {

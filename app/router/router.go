@@ -27,6 +27,7 @@ func Routers() *gin.Engine {
 		InitRoleRouter(PublicGroup)
 		InitMenuRouter(PublicGroup)
 		InitApiRouter(PublicGroup)
+		InitDictRouter(PublicGroup)
 	}
 	PrivateGroup := Router.Group("")
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())

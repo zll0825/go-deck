@@ -59,7 +59,7 @@ func GetRoleList(params dto.SearchRole) (total int64, data []entity.Role, err er
 }
 
 func GetUserList(params dto.SearchUser) (total int64, data []entity.User, err error) {
-	db := global.DB.System.Model(entity.Role{})
+	db := global.DB.System.Model(entity.User{})
 
 	if params.Username != "" {
 		db = db.Where("username LIKE ?", "%"+params.Username+"%")
@@ -77,7 +77,7 @@ func GetUserList(params dto.SearchUser) (total int64, data []entity.User, err er
 }
 
 func GetDictTypeList(params dto.SearchDictType)(total int64, data []entity.DictType, err error) {
-	db := global.DB.System.Model(entity.Role{})
+	db := global.DB.System.Model(entity.DictType{})
 
 	if params.Name != "" {
 		db = db.Where("name like ?", "%"+params.Name+"%")
@@ -98,10 +98,10 @@ func GetDictTypeList(params dto.SearchDictType)(total int64, data []entity.DictT
 }
 
 func GetDictDataList(params dto.SearchDictData)(total int64, data []entity.DictData, err error) {
-	db := global.DB.System.Model(entity.Role{})
+	db := global.DB.System.Model(entity.DictData{})
 
-	if params.TypeID > 0 {
-		db = db.Where("type_id = ?", params.TypeID)
+	if params.TypeId > 0 {
+		db = db.Where("type_id = ?", params.TypeId)
 	}
 
 	err = db.Count(&total).Error

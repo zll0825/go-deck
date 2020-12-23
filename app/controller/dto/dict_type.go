@@ -1,10 +1,10 @@
 package dto
 
 type CreateDictType struct {
-	Name   string `json:"name" form:"name" gorm:"column:name;comment:字典名（中）"`
-	Type   string `json:"type" form:"type" gorm:"column:type;comment:字典名（英）"`
-	Desc   string `json:"desc" form:"desc" gorm:"column:desc;comment:描述"`
-	Status int    `json:"status" form:"status" gorm:"column:status;comment:状态"`
+	Name        string `json:"name" binding:"required"`
+	Type        string `json:"type" binding:"required"`
+	Description string `json:"description"`
+	Status      int    `json:"status"`
 }
 
 type DeleteDictType struct {
