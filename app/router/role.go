@@ -6,17 +6,17 @@ import (
 	"go-deck/app/middleware"
 )
 
-func InitRoleRouter(Router *gin.RouterGroup) {
-	router := Router.Group("role").Use(middleware.OperationRecord())
+func InitRoleRouter(router *gin.RouterGroup) {
+	r := router.Group("role").Use(middleware.OperationRecord())
 	{
-		router.POST("create", controller.CreateRole)  // 新增角色
-		router.POST("delete", controller.DeleteRole)  // 删除角色
-		router.POST("update", controller.UpdateRole)  // 修改角色
-		router.POST("list", controller.GetRoleList)   // 角色列表
-		router.POST("detail", controller.GetRoleById) // 角色详情
-		router.POST("all", controller.GetAllRoles)    // 所有角色
+		r.POST("create", controller.CreateRole)  // 新增角色
+		r.POST("delete", controller.DeleteRole)  // 删除角色
+		r.POST("update", controller.UpdateRole)  // 修改角色
+		r.POST("list", controller.GetRoleList)   // 角色列表
+		r.POST("detail", controller.GetRoleById) // 角色详情
+		r.POST("all", controller.GetAllRoles)    // 所有角色
 
-		router.POST("bindMenu", controller.BindMenu) // 绑定菜单
-		router.POST("bindApi", controller.BindApi)   // 绑定api
+		r.POST("bindMenu", controller.BindMenu) // 绑定菜单
+		r.POST("bindApi", controller.BindApi)   // 绑定api
 	}
 }

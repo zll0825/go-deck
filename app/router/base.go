@@ -5,10 +5,10 @@ import (
 	"go-deck/app/controller"
 )
 
-func InitBaseRouter(Router *gin.RouterGroup) {
-	router := Router.Group("base")
+func InitBaseRouter(router *gin.RouterGroup) {
+	r := router.Group("base")
 	{
-		router.POST("captcha", controller.Captcha)
-		router.POST("login", controller.Login)
+		r.POST("captcha", controller.Captcha)
+		r.POST("login", controller.Login)
 	}
 }
